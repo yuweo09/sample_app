@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
   def show
      @user = User.find(params[:id])
+      @microposts = @user.microposts.paginate(page: params[:page])
     #  debugger
   end
 
@@ -39,6 +40,9 @@ class UsersController < ApplicationController
      render 'edit'
    end
  end
+ def feed
+   Micropost.where("user_id = ?", id)
+ end
 
 
  private
@@ -49,15 +53,6 @@ class UsersController < ApplicationController
    end
 
    # Before filters
-
-   # Confirms a logged-in user.
-   def logged_in_user
-     store_location
-     unless logged_in?
-       flash[:danger] = "Please log in."
-       redirect_to login_url
-     end
-   end
 
    # Confirms the correct user.
     def correct_user

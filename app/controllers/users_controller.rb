@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   def show
      @user = User.find(params[:id])
-      @microposts = @user.microposts.paginate(page: params[:page])
+      @microposts = @user.micropost.paginate(page: params[:page])
     #  debugger
   end
 
@@ -40,9 +40,7 @@ class UsersController < ApplicationController
      render 'edit'
    end
  end
- def feed
-   Micropost.where("user_id = ?", id)
- end
+
 
 
  private
